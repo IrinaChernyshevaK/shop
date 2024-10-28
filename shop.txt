@@ -1,0 +1,52 @@
+from pprint import pprint
+
+class Product:
+    def __init__(self, name:str, weight:float, category:str):
+        self.name = name
+        self.weight=weight
+        self.category=category
+
+    def __str__(self):
+        l=str(self.name+', '+str(self.weight)+', '+self.category)
+        return l
+
+
+class Shop():
+    cont=0
+    __file_name ='products.txt'
+
+    def get(self):
+        return self.__file_name
+
+    def get_products(self):
+        file = open(self.get(), 'a')
+        file.close()
+        file = open(self.get(), 'r')
+        self.cont = str(file.read())
+        file.close()
+        return self.cont
+
+    def add(self, *products):
+        self.get_products()
+        self.cont = self.cont.replace(',', '').split()
+        file = open(self.get(), 'a')
+        for i in products:
+            if i.name in self.cont:
+                    print(f'Продукт {i} уже есть в магазине')
+            else:
+                l=i.__str__()
+                file.write(l+"\n")
+        file.close()
+
+
+
+s1 = Shop()
+p1 = Product('Potato', 50.5, 'Vegetables')
+p2 = Product('Spaghetti', 3.4, 'Groceries')
+p3 = Product('Potato', 5.5, 'Vegetables')
+
+print(p2) # __str__
+
+s1.add(p1, p2, p3)
+
+print(s1.get_products())
